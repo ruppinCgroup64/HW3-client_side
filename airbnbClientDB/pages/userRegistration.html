@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="../css/flatStyle.css" rel="stylesheet" />
+    <script src="../js/ajaxCalls.js"></script>
+    <script src="../js/users_script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div id="btnBar">
+            <a href="userRegistration.html"><button type="button" class="btn btn-light" id="mainPage">Main</button></a>
+            <a href="flats.html"><button type="button" class="btn btn-light" id="flatsPage">Flats</button></a>
+        </div>
+
+        <button class="btn btn-primary" id="loginBtn">Login</button>
+        <form id="regForm">
+            <h2 id="regTitle">Registration</h2>
+            <div class="form-group">
+                <label for="firstName"><span class="red-star">★ </span>first name:</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Enter your first name" required>
+            </div>
+            <div class="form-group">
+                <label for="familyName"><span class="red-star">★ </span>family name:</label>
+                <input type="text" class="form-control" id="familyName" placeholder="Enter your family name" required />
+            </div>
+            <div class="form-group">
+                <label for="email"><span class="red-star">★ </span>Email</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email" required />
+            </div>
+            <div class="form-group">
+                <label for="password"><span class="red-star">★ </span>Password</label>
+                <input type="password" class="form-control" placeholder="Enter password" id="password" required />
+            </div>
+            <input type="submit" value="Register" id="submitRegUser"/>
+            <input type="submit" value="Update details" id="updateDetails"/>
+        </form> <br />
+                <button class="btn btn-danger" id="logoutBtn">Logout</button>
+
+        <!-- Modal -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <label for="emailLogin"><span class="red-star">★ </span>Email</label>
+                    <input type="email" class="form-control" id="emailLogin" placeholder="Enter your email" required />
+                    <label for="passwordLogin"><span class="red-star">★ </span>Password</label>
+                    <input type="password" class="form-control" placeholder="Enter password" id="passwordLogin" required /><br />
+                    <p id="incorrect"></p>
+                    <button type="submit" id="loginBtnModal">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
