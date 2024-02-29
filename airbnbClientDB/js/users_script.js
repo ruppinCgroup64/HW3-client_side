@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
-    /* server = `https://proj.ruppin.ac.il/cgroup64/test2/tar1/`*/
-    let port = 7021;
-    server = `https://localhost:${port}/`;
+     server = `https://proj.ruppin.ac.il/cgroup64/test2/tar1/`
+   /* let port = 7021;*/
+    /*server = `https://localhost:${port}/`;*/
 
     //initialize
     let loged = sessionStorage.getItem('user');
@@ -24,8 +24,16 @@
 
     //functions
     $('#loginForm').submit(submitLogin);
-    $('#logoutBtn').on('click', logoutChanges);
+    $('#regForm').submit((e) => {
+        if ($('#submitBtn').val() === 'Register') {
+            submitReg();
+        } else {
+            submitUpdate();
+        }
+        e.preventDefault();
+    });
 
+    $('#logoutBtn').on('click', logoutChanges); 
 })
 
 function submitReg() {
@@ -78,7 +86,6 @@ function LoginSCB(user) {
         $('#loginForm :input').not('#loginBtnModal').val('');
         swal("You've logged in successfully", "Great Job", "success");
         sessionStorage.setItem('user', JSON.stringify(user));
-        console.log(user);
         initialUser(user);
         logedUserChanges()
     }
@@ -120,22 +127,22 @@ function updateECB() {
 }
 function logedUserChanges() {
     $('#regTitle').html('Edit details');
-    $('#submitRegUser').hide();
-    $('#updateDetails').show();
+    $('#submitBtn').val('Update details');
     $('#logoutBtn').show();
     $('#loginBtn').hide();
-    $('#regForm').submit(submitUpdate);
-    $('#regForm').off('submit', submitReg);
+    //$('#regForm').submit(submitUpdate);
+    //$('#regForm').off('submit', submitReg);
 }
 function logoutChanges() {
     $('#regTitle').html('Registration');
-    $('#submitRegUser').show();
-    $('#updateDetails').hide();
+    $('#submitBtn').val('Register');
+    //$('#submitRegUser').show();
+    //$('#updateDetails').hide();
     $('#logoutBtn').hide();
     $('#loginBtn').show();
-    $('#regForm :input').not('#submitRegUser, #updateDetails').val('');
-    $('#regForm').submit(submitReg);
-    $('#regForm').off('submit', submitUpdate);
+    $('#regForm :input').not('#submitBtn').val('');
+    //$('#regForm').submit(submitReg);
+    //$('#regForm').off('submit', submitUpdate);
     $('#email').prop('readonly', false);
     sessionStorage.clear();
 }

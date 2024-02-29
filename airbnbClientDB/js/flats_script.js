@@ -1,18 +1,11 @@
 ﻿$(document).ready(function () {
-    /*server = `https://proj.ruppin.ac.il/cgroup64/test2/tar1/`*/
-    let port = 7021;
-    server = `https://localhost:${port}/`
+    server = `https://proj.ruppin.ac.il/cgroup64/test2/tar1/`
+    //let port = 7021;
+/*    server = `https://localhost:${port}/`*/
     $("#city").on("blur", checkCity);
     $("#newFlat").submit(submitFunc);
     getFlats();
     loged = sessionStorage.getItem('user');
-    //check if there is loged user
-    if (!loged) {
-        $('#Flats').on('click', '.orderBtn', function (event) {
-            event.stopPropagtion();
-            alert('Order vacation clicked');
-        })
-    }
 })
 
 function checkCity() {
@@ -81,6 +74,13 @@ function getSCB(flatList) {
     }
     str += `</div>`;
     $("#Flats").html(str);
+    if (!loged) {
+        const flatBtn = document.querySelectorAll(".orderBtn");
+        flatBtn.forEach((btn) => {
+            btn.disabled = true;
+            console.log(btn.disabled);
+        });
+    }
 }
 
 function getECB(err) {
