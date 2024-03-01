@@ -1,5 +1,6 @@
 ﻿using HW2_cgroup64.BL;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -9,12 +10,12 @@ namespace HW2_cgroup64.Controllers
     [ApiController]
     public class VacationsController : ControllerBase
     {
-        // GET: api/<VacationsController>
-        [HttpGet]
-        public IEnumerable<Vacation> Get()
-        {
-            return Vacation.Read();
-        }
+        //// GET: api/<VacationsController>
+        //[HttpGet]
+        //public IEnumerable<Vacation> Get()
+        //{
+        //    return Vacation.Read();
+        //}
 
         //HW1
         //[HttpGet("getByDates/{startDate}/{endDate}")]//return the vac between start and end date
@@ -23,11 +24,11 @@ namespace HW2_cgroup64.Controllers
         //    return Vacation.ReadByDates(startDate, endDate);
         //}
 
-        // GET api/<VacationsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{month}")]
+        public Object GetReport(string month)
         {
-            return "value";
+            int m= Convert.ToInt32(month);
+            return Vacation.Report(m);
         }
 
         // POST api/<VacationsController>

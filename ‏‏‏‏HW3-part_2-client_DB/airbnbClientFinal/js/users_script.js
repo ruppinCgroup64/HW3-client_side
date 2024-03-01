@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
-     server = `https://proj.ruppin.ac.il/cgroup64/test2/tar1/`
-   /* let port = 7021;*/
-    /*server = `https://localhost:${port}/`;*/
+    // server = `https://proj.ruppin.ac.il/cgroup64/test2/tar1/`
+    let port = 7021;
+    server = `https://localhost:${port}/`;
 
     //initialize
     let loged = sessionStorage.getItem('user');
@@ -47,7 +47,7 @@ function postUser() {
         FirstName: $("#firstName").val(),
         FamilyName: $("#familyName").val(),
         Email: $("#email").val(),
-        Password: $("#password").val(),
+        Password: $("#password").val()
     }
     //check if user with this email exists
     let api = server + `api/Users`
@@ -78,19 +78,30 @@ function submitLogin() {
 }
 
 function LoginSCB(user) {
-    if (user.email != null) {
-        $('#incorrect').html('');
-        // Close the modal after login attempt
-        $('#loginModal').css("display", "none");
-        //reset the login form
-        $('#loginForm :input').not('#loginBtnModal').val('');
-        swal("You've logged in successfully", "Great Job", "success");
+    if (user.email == 'admin@gmail.com' && user.password == 'admin') {
+        window.location.href = '../pages/admin.html';
         sessionStorage.setItem('user', JSON.stringify(user));
-        initialUser(user);
-        logedUserChanges()
     }
     else {
-        $('#incorrect').html('incorrect details!')
+        if (user.email != null) {
+            if (user.isActive == true) {
+                $('#incorrect').html('');
+                // Close the modal after login attempt
+                $('#loginModal').css("display", "none");
+                //reset the login form
+                $('#loginForm :input').not('#loginBtnModal').val('');
+                swal("You've logged in successfully", "Great Job", "success");
+                sessionStorage.setItem('user', JSON.stringify(user));
+                initialUser(user);
+                logedUserChanges()
+            }
+            else {
+                alert("This user is not active")
+            }
+        }
+        else {
+            $('#incorrect').html('incorrect details!')
+        }
     }
 }
 function initialUser(user) {
@@ -130,19 +141,13 @@ function logedUserChanges() {
     $('#submitBtn').val('Update details');
     $('#logoutBtn').show();
     $('#loginBtn').hide();
-    //$('#regForm').submit(submitUpdate);
-    //$('#regForm').off('submit', submitReg);
 }
 function logoutChanges() {
     $('#regTitle').html('Registration');
     $('#submitBtn').val('Register');
-    //$('#submitRegUser').show();
-    //$('#updateDetails').hide();
     $('#logoutBtn').hide();
     $('#loginBtn').show();
     $('#regForm :input').not('#submitBtn').val('');
-    //$('#regForm').submit(submitReg);
-    //$('#regForm').off('submit', submitUpdate);
     $('#email').prop('readonly', false);
     sessionStorage.clear();
 }

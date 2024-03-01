@@ -190,6 +190,8 @@ public class DBservices
                 u.FamilyName = dataReader["familyName"].ToString();
                 u.FirstName = dataReader["firstName"].ToString();
                 u.Password = dataReader["password"].ToString();
+                u.IsActive = Convert.ToBoolean(dataReader["isActive"]);
+                u.IsAdmin = Convert.ToBoolean(dataReader["isAdmin"]);
                 usersList.Add(u);
             }
             return usersList;
@@ -311,6 +313,55 @@ public class DBservices
         }
 
     }
+    public Object ReadReport(int month)
+    {
+
+        SqlConnection con;
+        SqlCommand cmd;
+        List<Object> reports = new List<Object>();
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+        cmd = CreateReportCommandWithStoredProcedure("sp_Report_2024", con, month);             // create the command
+
+        try
+        {
+            SqlDataReader dataReader = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while (dataReader.Read())
+            {
+                reports.Add(new
+                {
+                    city = dataReader["City"].ToString(),
+                    averagePrice = Convert.ToDouble(dataReader["AveragePricePerNight"])
+                });
+            }
+            return reports;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }  
+   
 
     //--------------------------------------------------------------------------------------------------
     // This method update user details
@@ -394,6 +445,8 @@ public class DBservices
                 u.FamilyName = dataReader["familyName"].ToString();
                 u.FirstName = dataReader["firstName"].ToString();
                 u.Password = dataReader["password"].ToString();
+                u.IsActive = Convert.ToBoolean(dataReader["isActive"]);
+                u.IsAdmin = Convert.ToBoolean(dataReader["isAdmin"]);
             }
             return u;
         }
@@ -413,7 +466,45 @@ public class DBservices
         }
 
     }
+    public int UpdateUserIsActive(User user)
+    {
 
+        SqlConnection con;
+        SqlCommand cmd;
+
+        try
+        {
+            con = connect("myProjDB"); // create the connection
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        cmd = CreateUserUpdateIsActiveCommandWithStoredProcedure("sp_UpdateUserActivity_2024", con, user);             // create the command
+
+        try
+        {
+            int numEffected = cmd.ExecuteNonQuery(); // execute the command
+            return numEffected;
+        }
+        catch (Exception ex)
+        {
+            // write to log
+            throw (ex);
+        }
+
+        finally
+        {
+            if (con != null)
+            {
+                // close the db connection
+                con.Close();
+            }
+        }
+
+    }
     //---------------------------------------------------------------------------------
     // Create the SqlCommand using a stored procedure
     //---------------------------------------------------------------------------------
@@ -493,6 +584,46 @@ public class DBservices
         cmd.Parameters.AddWithValue("@firstName", user.FirstName);
         cmd.Parameters.AddWithValue("@familyName", user.FamilyName);
         cmd.Parameters.AddWithValue("@password", user.Password);
+
+        return cmd;
+    }
+    private SqlCommand CreateUserUpdateIsActiveCommandWithStoredProcedure(String spName, SqlConnection con, User user)
+    {
+
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@email", user.Email);
+        cmd.Parameters.AddWithValue("@firstName", user.FirstName);
+        cmd.Parameters.AddWithValue("@familyName", user.FamilyName);
+        cmd.Parameters.AddWithValue("@password", user.Password);
+        cmd.Parameters.AddWithValue("@isActive", user.IsActive);
+
+        return cmd;
+    }
+    private SqlCommand CreateReportCommandWithStoredProcedure(String spName, SqlConnection con, int month)
+    {
+
+
+        SqlCommand cmd = new SqlCommand(); // create the command object
+
+        cmd.Connection = con;              // assign the connection to the command object
+
+        cmd.CommandText = spName;      // can be Select, Insert, Update, Delete 
+
+        cmd.CommandTimeout = 10;           // Time to wait for the execution' The default is 30 seconds
+
+        cmd.CommandType = System.Data.CommandType.StoredProcedure; // the type of the command, can also be text
+
+        cmd.Parameters.AddWithValue("@month", month);
 
         return cmd;
     }

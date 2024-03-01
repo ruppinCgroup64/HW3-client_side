@@ -1,4 +1,6 @@
-﻿namespace HW2_cgroup64.BL
+﻿using System;
+
+namespace HW2_cgroup64.BL
 {
     public class Vacation
     {
@@ -42,6 +44,11 @@
         {
             DBservices dbs = new DBservices();
             return dbs.ReadVacations();
+        }
+        static public Object Report(int month)
+        {
+            DBservices dbs = new DBservices();
+            return dbs.ReadReport(month);
         }
 
         //HW2

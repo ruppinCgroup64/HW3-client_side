@@ -46,6 +46,13 @@ namespace HW3_cgroup64.Controllers
             return u.Update();
         }
 
+        [HttpPut]
+        [Route("isActive")]
+        public int updateActive([FromBody] User u)
+        {
+            return u.UpdateIsActive();
+        }
+
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)

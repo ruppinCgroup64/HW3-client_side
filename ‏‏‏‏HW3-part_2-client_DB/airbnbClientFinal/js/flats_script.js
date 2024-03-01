@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
-    server = `https://proj.ruppin.ac.il/cgroup64/test2/tar1/`
-    //let port = 7021;
-/*    server = `https://localhost:${port}/`*/
+    //server = `https://proj.ruppin.ac.il/cgroup64/test2/tar1/`
+    let port = 7021;
+    server = `https://localhost:${port}/`
     $("#city").on("blur", checkCity);
     $("#newFlat").submit(submitFunc);
     getFlats();
