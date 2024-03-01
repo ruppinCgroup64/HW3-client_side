@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
-    //server = `https://proj.ruppin.ac.il/cgroup64/test2/tar1/`
-    let port = 7021;
-    server = `https://localhost:${port}/`
+    server = `https://proj.ruppin.ac.il/cgroup64/test2/tar1/`
+    //let port = 7021;
+    //server = `https://localhost:${port}/`
     //get the id from the query string
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
