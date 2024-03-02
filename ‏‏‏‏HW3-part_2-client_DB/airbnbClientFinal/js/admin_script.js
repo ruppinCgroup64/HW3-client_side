@@ -7,7 +7,7 @@
     })
     $('#data').hide();
     $('#manageUsers').on('click', renderUsers)
-    $("#monthsDropdown").on('change', (e) => renderReport(e));
+    $("#showAve").on('click', renderReport)
 })
 
 let tbl; 
@@ -83,8 +83,8 @@ function putSCB() {
 function putECB(err) {
     console.log(err);
 }
-function renderReport(e) {
-    selectedM = e.target.value;
+function renderReport() {
+    selectedM = $("#monthsDropdown").val();
     let api = server + `api/Vacations/${selectedM}`;
     ajaxCall("GET", api, "", reportSCB, reportECB);
 }
