@@ -78,7 +78,7 @@ function changeIsActive(e) {
 }
 
 function putSCB() {
-    console.log(users);
+    renderUsers();// Show if the DB was updated properly
 }
 function putECB(err) {
     console.log(err);
